@@ -15,33 +15,32 @@ jobs:
     steps:
       - checkout
       - run: npm i
-      - save-cache: 
+      - save-cache:
           keys: "npm-packages"
-          paths: 
-           - /src/node_modules
+          paths:
+            - /src/node_modules
       - run: npm run lint
   test:
     docker:
-        - image: circleci/node:13.8.0
+      - image: circleci/node:13.8.0
       # Add steps to the job
       # See: https://circleci.com/docs/2.0/configuration-reference/#steps
-      steps:
-        - checkout
-        - restore-cache: 
-            keys: "npm-packages"
-        - run: npm i
-        - run: npm run test
+    steps:
+      - checkout
+      - restore-cache:
+          keys: "npm-packages"
+      - run: npm i
+      - run: npm run test
   analyze:
     docker:
-        - image: circleci/node:13.8.0
+      - image: circleci/node:13.8.0
       # Add steps to the job
       # See: https://circleci.com/docs/2.0/configuration-reference/#steps
-      steps:
-        - checkout
-        - restore-cache: 
-            keys: "npm-packages"
-        - run: npm audit
-
+    steps:
+      - checkout
+      - restore-cache:
+          keys: "npm-packages"
+      - run: npm audit
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -51,7 +50,7 @@ workflows:
       - build
       - test:
         requires:
-         - build
-      - analyse: 
-        requires: 
-         - test
+          - build
+      - analyse:
+        requires:
+          - test
